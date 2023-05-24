@@ -7,9 +7,13 @@
   <groupId>ca.acorn</groupId>
   <artifactId>acornmicroservices</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
   <name>acornmicroservices</name>
   <url>http://www.example.com</url>
+  <modules>
+    <module>customer</module>
+  </modules>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
