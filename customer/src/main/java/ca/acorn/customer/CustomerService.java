@@ -21,7 +21,7 @@ public class CustomerService {
         customerRepository.saveAndFlush(customer); // flush needed to have id
         // todo: check if fraudster
         FraudCheckResponse response = restTemplate.getForObject(
-                "http://localhost:8081/api/v1/fraud-check/{customerId}",
+                "http://FRAUD/api/v1/fraud-check/{customerId}", //FRAUD name is from eureka-server
                 FraudCheckResponse.class,
                 customer.getId()
         );
