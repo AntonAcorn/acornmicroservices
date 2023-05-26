@@ -31,6 +31,6 @@ public class Notification {
     private Integer toCustomerId;
     private String message;
     private String sender;
-    private LocalDateTime sent_at;
+    private LocalDateTime sentAt;
     private String toCustomerEmail;
 }

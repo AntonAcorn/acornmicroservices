@@ -2,8 +2,8 @@ package ca.acorn.notification;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,12 +15,11 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
-    @GetMapping("{customerId}")
-    public Notification sendNotification(
-            @PathVariable Integer customerId){
-        notificationService.sendNotification(customerId);
-        log.info("notification sent to customer {}", customerId);
-        return new Notification();
+    @PostMapping("{customerId}")
+    public void sendNotification(
+            @RequestBody NotificationRequest notificationRequest){
+        notificationService.send(notificationRequest);
+        log.info("new notification {}", notificationRequest);
     }
 
 }
