@@ -14,6 +14,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final FraudClient fraudClient;
     private final NotificationClient notificationClient;
+
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
                 .firstName(request.firstName())
@@ -27,7 +28,7 @@ public class CustomerService {
         FraudCheckResponse response =
                 fraudClient.isFraudster(customer.getId());
 
-        if (response.isFraudster()){
+        if (response.isFraudster()) {
             throw new IllegalStateException("fraudster");
         }
 
@@ -35,8 +36,8 @@ public class CustomerService {
         notificationClient.sendNotification(
                 new NotificationRequest(
                         customer.getId(),
-                        customer.getEmail(),
-                        "Hi %s, welcome to my service", customer.getFirstName()
+                        customer.getFirstName(),
+                        "Hello, %s".formatted(customer.getEmail())
                 )
         );
     }

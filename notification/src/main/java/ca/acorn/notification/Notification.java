@@ -29,8 +29,9 @@ public class Notification {
     )
     private Integer id;
     private Integer toCustomerId;
-    private String message;
-    private String sender;
-    private LocalDateTime sentAt;
     private String toCustomerEmail;
+    private String sender;
+    private String message;
+    private LocalDateTime sentAt;
+
 }
