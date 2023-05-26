@@ -1,5 +1,6 @@
 package ca.acorn.notification;
 
+import ca.acorn.clients.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,13 @@ public class NotificationService {
     public void send(NotificationRequest notificationRequest) {
         Notification notification = Notification
                 .builder()
-                .toCustomerId()
-                .toCustomerEmail()
-                .sender()
-                .message()
-                .sent_at(LocalDateTime.now())
+                .toCustomerId(notificationRequest.toCustomerId())
+                .toCustomerEmail(notificationRequest.toCustomerEmail())
+                .sender(notificationRequest.sender())
+                .message(notificationRequest.message())
+                .sentAt(LocalDateTime.now())
                 .build();
+
+        notificationRepository.save(notification);
     }
 }

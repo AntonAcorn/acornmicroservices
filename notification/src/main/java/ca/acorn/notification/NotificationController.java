@@ -1,5 +1,6 @@
 package ca.acorn.notification;
 
+import ca.acorn.clients.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,11 +16,10 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
-    @PostMapping("{customerId}")
+    @PostMapping
     public void sendNotification(
             @RequestBody NotificationRequest notificationRequest){
         notificationService.send(notificationRequest);
         log.info("new notification {}", notificationRequest);
     }
-
 }

@@ -1,4 +1,4 @@
-package ca.acorn.notification;
+package ca.acorn.clients.notification;
 
 public record NotificationRequest(
         Integer toCustomerId,
