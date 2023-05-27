@@ -1,5 +1,6 @@
 package ca.acorn.customer;
 
+import ca.acorn.amqp.RabbitMQMessageProducer;
 import ca.acorn.clients.fraud.FraudCheckResponse;
 import ca.acorn.clients.fraud.FraudClient;
 import ca.acorn.clients.notification.NotificationClient;
@@ -14,6 +15,7 @@ public class CustomerService {
     private final CustomerRepository customerRepository;
     private final FraudClient fraudClient;
     private final NotificationClient notificationClient;
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
     public void registerCustomer(CustomerRegistrationRequest request) {
         Customer customer = Customer.builder()
@@ -32,13 +34,15 @@ public class CustomerService {
             throw new IllegalStateException("fraudster");
         }
 
-        // todo: make async
-        notificationClient.sendNotification(
-                new NotificationRequest(
-                        customer.getId(),
-                        customer.getFirstName(),
-                        "Hello, %s".formatted(customer.getEmail())
-                )
+        NotificationRequest notificationRequest = new NotificationRequest(
+                customer.getId(),
+                customer.getFirstName(),
+                "Hello, %s".formatted(customer.getEmail())
+        );
+        rabbitMQMessageProducer.publish(
+                notificationRequest,
+                "internal.exchange",
+                "internal.notification.routing-key"
         );
     }
 }
